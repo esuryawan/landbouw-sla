@@ -1,0 +1,124 @@
+@import url("https://use.fontawesome.com/releases/v5.3.1/css/all.css");
+@import url("https://fonts.googleapis.com/css?family=Numans");
+
+* {
+	/* outline: 1px dashed white; */
+	box-sizing: border-box;
+}
+body,
+html {
+	height: 98%;
+}
+
+body {
+	background-image: url("img/bg.jpg");
+	background-repeat: repeat;
+}
+
+body.background {
+	filter: blur(8px);
+	-webkit-filter: blur(8px);
+	background: rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(8px);
+	height: 100vh;
+	width: 50%;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+button {
+	border-radius: 10px !important;
+}
+
+.container {
+	/* display: flex; */
+	margin: 0 auto;
+	margin-top: 1ch;
+	margin-bottom: 1ch;
+
+	width: 100vh;
+	max-width: 360px;
+	padding: 10px;
+	position: relative;
+	align-content: center;
+	background-color: rgba(59, 119, 163, 0.75) !important;
+	border-radius: 25px !important;
+	box-shadow: 8px 8px 20px 0px #3fa1a9;
+}
+@media all and (max-width: 360px) {
+	.container {
+		height: 100vh;
+		width: 100vw;
+		margin: 0px !important;
+		border-radius: 0px !important;
+	}
+}
+
+.graduation-info {
+	padding: 0 10;
+	width: 100%;
+	text-align: left;
+}
+
+input[type="text"] {
+	width: 100%;
+	padding: 10px;
+	/* margin: 5px 0 22px 0; */
+	border: none;
+}
+
+input[type="text"]:focus {
+	outline: none;
+}
+
+span.input-group-text {
+	background-color: #f8ad3c !important;
+	color: black;
+	border: 0 !important;
+	width: 3em;
+	display: flex;
+	justify-content: center;
+}
+
+.title {
+	color: white;
+	text-align: center;
+}
+
+.title-dark {
+	color: darkblue;
+	text-align: center;
+}
+
+h3.title {
+	font-size: xx-large;
+}
+
+.div-btn {
+	width: 50%;
+	margin: auto;
+}
+
+.btn {
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 10px;
+
+	background-color: #f8ad3c !important;
+	color: white;
+	cursor: pointer;
+	opacity: 0.9;
+}
+
+.btn:hover {
+	opacity: 1;
+}
+
+.center {
+	margin: 2em;
+	display: grid;
+	justify-content: center;
+	text-align: center;
+}
