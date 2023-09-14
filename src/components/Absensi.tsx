@@ -1,15 +1,18 @@
 import React from "react";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
-import { Severity, ViewStatus, ViewStatusProps, ViewStatusState } from "ababil-ui-views";
+import classNames from "classnames";
 
+import { Severity, ViewStatus, ViewStatusProps, ViewStatusState } from "ababil-ui-views";
 import { grupIndex, UserSLA } from "ababil-landbouw";
 
 import { authService } from "../services/auth";
 import { ResponseName } from "../utils";
 import { GrupNames, ResponseCode } from "../constants";
 
-interface AbsensiProps extends ViewStatusProps {}
+import styles from "../styles/general.module.scss";
+
+interface AbsensiProps extends ViewStatusProps { }
 
 interface AbsensiState extends ViewStatusState {
 	submit: boolean;
@@ -78,7 +81,7 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 	insertFieldAngkatan(name: string, label: string, placeholder: string) {
 		let list = [];
 		list.push(<option key={0} value={0}></option>);
-		for (var i = 1959; i < 2022; i++) {
+		for (var i = 1959; i < 2024; i++) {
 			let item = "" + i;
 			list.push(
 				<option key={item} value={item}>
@@ -97,7 +100,7 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 						{list}
 					</select>
 				</div>
-				<p className="angkatan-info">{parse(this.angkatanInfo)}</p>
+				<p>{parse(this.angkatanInfo)}</p>
 			</div>
 		);
 	}
@@ -123,7 +126,7 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 		if (this.namas && this.namas.length < this.namaCount) {
 			list.push(
 				<li value="x" key="x">
-					<span className="filter-info"> {this.namaCount - this.namas.length} nama lain tidak ditampilkan</span>
+					<span> {this.namaCount - this.namas.length} nama lain tidak ditampilkan</span>
 				</li>
 			);
 		}
@@ -138,9 +141,8 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 					<ul className="dropdown-menu" aria-labelledby="dropdownMenuButton2" id="myDropdown">
 						{list}
 					</ul>
-					{/* <i className="fa fa-chevron-down" /> */}
 				</div>
-				<p className="input-info">{parse(this.namaInfo)}</p>
+				<p>{parse(this.namaInfo)}</p>
 			</div>
 		);
 	}
@@ -185,27 +187,32 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 	}
 
 	insertValidationMsg(valid: boolean, error: string) {
-		let classNm = "validation-msg text-sm-left";
-		if (valid) classNm = "validation-info text-sm-left ";
-		return error && <p className={classNm}>{parse(error)}</p>;
+		if (valid) {
+			return error && <p className={classNames("text-sm-left", "validation-info")}>{parse(error)}</p>;
+		} else {
+			return error && <p className={classNames("text-sm-left", "validation-msg")}>{parse(error)}</p >;
+		}
 	}
+
 
 	render() {
 		return (
-			<div className="container">
+			<div className={styles.container}>
 				{this.doStatusRender()}
 				{this.state.submit ? (
 					<>
 						{this.state.absenStatus === ResponseCode.Success ? (
 							<>
-								<div className="center">
-									<h4>Berhasil</h4>
+								<div className={styles.center}>
+									<h4>Absensi Berhasil</h4>
 									<span>
 										<b>{this.state.absenName}</b>
 									</span>
+									<br />
 									<span>
-										<b>{this.state.absenGraduation}</b>
+										<b> (Angkatan {this.state.absenGraduation})</b>
 									</span>
+									<br />
 									<span>
 										<b>{this.state.absenAttendanceAt}</b>
 									</span>
@@ -213,8 +220,8 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 							</>
 						) : (
 							<>
-								<div className="center">
-									<h4>Gagal</h4>
+								<div className={styles.center}>
+									<h4>Absensi Gagal</h4>
 									<span>
 										<b>{ResponseName(this.state.absenStatus)}</b>
 									</span>
@@ -227,7 +234,7 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 					</>
 				) : (
 					<>
-						<h3 className="title">Absensi SLA 2022</h3>
+						<h3 className={styles.title}>Absensi SLA 2023</h3>
 						<form>
 							<label htmlFor="inputAngkatan">Angkatan</label>
 							{this.insertFieldAngkatan("inputAngkatan", "Angkatan", "Pilih Angkatan")}
@@ -235,13 +242,13 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 							<label htmlFor="Nama">Nama</label>
 							{this.insertFieldNama("Nama", "Nama", "Pilih Nama")}
 
-							<button type="button" className="btn" onClick={this.onAbsensi.bind(this)}>
+							<button type="button" className={styles.btn} onClick={this.onAbsensi.bind(this)}>
 								Absensi
 							</button>
 						</form>
 					</>
 				)}
-				<button type="button" className="btn">
+				<button type="button" className={styles.btn}>
 					<Link to="/">Tutup</Link>
 				</button>
 			</div>

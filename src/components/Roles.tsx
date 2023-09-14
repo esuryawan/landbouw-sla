@@ -1,16 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import classNames from "classnames";
 import { withRouter, WithRouterProps } from "ababil-router";
 import { authService } from "../services/auth";
 import { Severity, ViewPaging, ViewPagingProps, ViewPagingState } from "ababil-ui-views";
 
-import "./Roles.css";
+import styles from "./Roles.module.scss";
 
 class Roles extends ViewPaging<WithRouterProps<ViewPagingProps>, ViewPagingState> {
-	// constructor(props: ViewPagingProps) {
-	// 	super(props);
-	// }
 
 	componentDidMount() {
 		this.getRecords(this.state.page);
@@ -38,76 +36,36 @@ class Roles extends ViewPaging<WithRouterProps<ViewPagingProps>, ViewPagingState
 	}
 
 	formatRoles(roles: any) {
-		let tags = [];
+		const result: any = [];
+		const pushFA = (i: number, icon: string) => {
+			result.push(<i key={i} className={classNames("fa", icon, styles.fontSmall)}>&nbsp;</i>);
+		}
+
 		for (let i = 0; i < roles.length; i++) {
 			const role = roles[i];
 			switch (role) {
-				case "panitia.pindai":
-					tags.push(
-						<i key={i} className="fa fa-qrcode fa-2">
-							&nbsp;
-						</i>
-					);
-					break;
-
-				case "panitia.absensi":
-					tags.push(
-						<i key={i} className="fa fa-check-square fa-2">
-							&nbsp;
-						</i>
-					);
-					break;
-
-				case "admin.angkatan":
-					tags.push(
-						<i key={i} className="fa fa-graduation-cap fa-2">
-							&nbsp;
-						</i>
-					);
-					break;
-
-				case "admin.all":
-					tags.push(
-						<i key={i} className="fa fa-university fa-2">
-							&nbsp;
-						</i>
-					);
-					break;
-
-				case "view.chart":
-					tags.push(
-						<i key={i} className="fa fa-chart-bar fa-2">
-							&nbsp;
-						</i>
-					);
-					break;
-
-				case "super.super":
-					tags.push(
-						<i key={i} className="fa fa-cog fa-2">
-							&nbsp;
-						</i>
-					);
-					break;
-
-				default:
-					break;
+				case "panitia.pindai": pushFA(i, "fa-qrcode"); break;
+				case "panitia.absensi": pushFA(i, "fa-check-square"); break;
+				case "admin.angkatan": pushFA(i, "fa-graduation-cap"); break;
+				case "admin.all": pushFA(i, "fa-university"); break;
+				case "view.chart": pushFA(i, "fa-chart-bar"); break;
+				case "super.super": pushFA(i, "fa-cog"); break;
+				default: break;
 			}
 		}
-		return <>{tags}</>;
+		return <>{result}</>;
 	}
 
 	onRowClick(e: any, item: any) {
-		// console.log(e);
 		console.log(item);
 		this.props.history.push(`/roles/edit/${item.UserId}/${item.Email}`);
 	}
 
 	render() {
 		return (
-			<div className="container">
+			<div className={styles.container} >
 				{this.doStatusRender()}
-				<Paper sx={{ width: "100%", overflow: "hidden" }} className="transparent">
+				<Paper sx={{ width: "100%", overflow: "hidden" }} className={styles.transparent}>
 					<TableContainer sx={{ maxHeight: 440 }}>
 						<Table>
 							<TableHead>
@@ -133,10 +91,10 @@ class Roles extends ViewPaging<WithRouterProps<ViewPagingProps>, ViewPagingState
 					</TableContainer>
 					{this.doPaginationRender()}
 				</Paper>
-				<button type="button" className="btn mt-2">
+				<button type="button" className={classNames(styles.btn, "mt-2")} >
 					<Link to="/roles/add">Tambah</Link>
 				</button>
-				<button type="button" className="btn">
+				<button type="button" className={styles.btn}>
 					<Link to="/">Tutup</Link>
 				</button>
 			</div>

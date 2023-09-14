@@ -6,7 +6,8 @@ import { Severity, ViewStatus, ViewStatusProps, ViewStatusState } from "ababil-u
 import { withRouter, WithRouterProps } from "ababil-router";
 import { authService } from "../services/auth";
 import { UserSLA } from "ababil-landbouw";
-import "./RolesAdd.css";
+import styles from "./RolesAdd.module.scss";
+import classNames from "classnames";
 
 interface RolesAddProps extends ViewStatusProps {
 	id?: string;
@@ -63,7 +64,7 @@ class RolesAdd extends ViewStatus<WithRouterProps<RolesAddProps>, RolesAddState>
 		if (this.emails && this.emails.length < this.emailCount) {
 			list.push(
 				<li value="x" key="x">
-					<span className="filter-info"> {this.emailCount - this.emails.length} email lain tidak ditampilkan</span>
+					<span> {this.emailCount - this.emails.length} email lain tidak ditampilkan</span>
 				</li>
 			);
 		}
@@ -90,7 +91,7 @@ class RolesAdd extends ViewStatus<WithRouterProps<RolesAddProps>, RolesAddState>
 							{list}
 						</ul>
 					</div>
-					<p className="input-info">{parse(this.emailInfo)}</p>
+					<p>{parse(this.emailInfo)}</p>
 				</div>
 			</>
 		);
@@ -191,12 +192,12 @@ class RolesAdd extends ViewStatus<WithRouterProps<RolesAddProps>, RolesAddState>
 	}
 
 	render() {
-		const insertRoleItem = (title: string, role: string, fa: string) => {
+		const insertRoleItem = (title: string, role: string, faIcon: string) => {
 			let checked = this.state.roles.find((e) => e === role) ? true : false;
 			return (
 				<TableRow>
 					<TableCell>
-						<i className={"fa " + fa + " fa-2"}>&nbsp;</i>
+						<i className={classNames("fa", faIcon, styles.fontSmall)}>&nbsp;</i>
 						{title}
 					</TableCell>
 					<TableCell>
@@ -206,13 +207,13 @@ class RolesAdd extends ViewStatus<WithRouterProps<RolesAddProps>, RolesAddState>
 			);
 		};
 		return (
-			<div className="container">
+			<div className={styles.container}>
 				{this.doStatusRender()}
 				<>
-					<h3 className="title">Akses</h3>
+					<h3 className={styles.title}>Akses User</h3>
 					<form>
 						{this.props.match.params.id && (
-							<div className="email-title">
+							<div className={styles.emailTitle}>
 								<span>{this.props.match.params.email}</span>
 							</div>
 						)}
@@ -234,7 +235,7 @@ class RolesAdd extends ViewStatus<WithRouterProps<RolesAddProps>, RolesAddState>
 										{insertRoleItem("Statistik", "view.chart", "fa-chart-bar")}
 									</TableBody>
 								</Table>
-								<button type="button" className="btn mt-2" onClick={this.onRolesSave.bind(this)}>
+								<button type="button" className={classNames(styles.btn, "mt-2")} onClick={this.onRolesSave.bind(this)}>
 									Simpan
 								</button>
 							</>
@@ -242,7 +243,7 @@ class RolesAdd extends ViewStatus<WithRouterProps<RolesAddProps>, RolesAddState>
 					</form>
 				</>
 
-				<button type="button" className="btn">
+				<button type="button" className={styles.btn}>
 					<Link to="/roles">Tutup</Link>
 				</button>
 			</div>

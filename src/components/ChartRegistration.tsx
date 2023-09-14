@@ -1,11 +1,14 @@
 import React from "react";
+import classNames from "classnames";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { Link } from "react-router-dom";
 
-import { authService } from "../services/auth";
 import { getLocalTime } from "ababil-utils";
 import { Severity, ViewStatus, ViewStatusProps, ViewStatusState } from "ababil-ui-views";
+import { authService } from "../services/auth";
+
+import styles from "../styles/general.module.scss";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -85,17 +88,17 @@ export default class ChartRegistration extends ViewStatus<ChartRegistrationProps
 			],
 		};
 		return this.state.loaded ? (
-			<div className="container">
+			<div className={styles.container}>
 				{this.doStatusRender()}
 				<div>
-					<h3 className="title">Registrasi Angkatan</h3>
+					<h3 className={styles.title}>Registrasi Angkatan</h3>
 					<Doughnut data={adata} />
-					<h3 className="title mt-3">Registrasi Grup</h3>
+					<h3 className={classNames(styles.title, "mt-3")}>Registrasi Grup</h3>
 					<Doughnut data={gdata} />
-					<h5 className="title mt-3">Total {this.state.total} Alumni</h5>
-					<h6 className="title mt-3"> {getLocalTime()}</h6>
+					<h5 className={classNames(styles.title, "mt-3")}>Total {this.state.total} Alumni</h5>
+					<h6 className={classNames(styles.title, "mt-3")}> {getLocalTime()}</h6>
 				</div>
-				<button type="button" className="btn">
+				<button type="button" className={styles.btn}>
 					<Link to="/">Tutup</Link>
 				</button>
 			</div>

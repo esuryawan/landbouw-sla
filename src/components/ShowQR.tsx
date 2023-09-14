@@ -6,7 +6,7 @@ import { authService } from "../services/auth";
 import { UserSLA } from "ababil-landbouw";
 import { Severity, ViewStatus, ViewStatusProps, ViewStatusState } from "ababil-ui-views";
 
-import "./ShowQR.css";
+import styles from "../styles/general.module.scss";
 
 interface ShowQRProps extends ViewStatusProps {}
 
@@ -48,24 +48,24 @@ export default class ShowQR extends ViewStatus<ShowQRProps, ShowQRState> {
 
 	override render() {
 		return (
-			<div className="container">
+			<div className={styles.container}>
 				{this.doStatusRender()}
 				<div>
-					<h4 className="title">Absensi QR</h4>
+					<h4 className={styles.title}>Absensi QR</h4>
 					{this.code.length > 0 && (
-						<div className="center">
+						<div className={styles.center}>
 							<QRCode value={this.code} bgColor="#6C99BA" />
 							<br></br>
 							<span>tunjukan kode QR ini pada panitia absensi</span>
 						</div>
 					)}
 					{this.attendanceAt.length > 0 && (
-						<div className="center">
+						<div className={styles.center}>
 							<span>Sudah absensi pada {this.attendanceAt}</span>
 						</div>
 					)}
 
-					<button type="button" className="btn">
+					<button type="button" className={styles.btn}>
 						<Link to="/">Tutup</Link>
 					</button>
 				</div>

@@ -1,0 +1,38 @@
+@use "../styles/general";
+
+.footnote {
+    margin-top: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    font-size: 0.8em;
+    font-style: italic;
+    text-align: center;
+}
+
+.logtime {
+    margin-top: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    font-size: 1.2em;
+    font-style: italic;
+    text-align: center;
+}
+.stickyHeader {
+    /* "top" */
+    inset-block-start: 0;
+    position: sticky;
+    background-color: #f2f7fc;
+}
+
+.stickyFooter {
+    /* "bottom" */
+    inset-block-end: 0;
+    position: sticky;
+    background-color: #f2f7fc;
+}
+
+// table tr th:first-child
+.stickyLeftColumn {
+    position: sticky;
+    inset-inline-start: 0; /* "left" */
+}

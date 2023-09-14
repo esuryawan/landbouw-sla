@@ -1,0 +1,31 @@
+@use "../styles/general";
+
+.centerProfile {
+	margin: 1em;
+	display: grid;
+	justify-content: center;
+	text-align: center;
+}
+
+.avatarUpload:before {
+	content: "\f093";
+	font-size: 80px;
+	position: absolute;
+	padding-top: 40px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: #f8ad3c;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	opacity: 0;
+	transition: 0.5s ease;
+	background-color: #6c99ba;
+}
+
+.avatarUpload:hover:before {
+	opacity: 1;
+}
+

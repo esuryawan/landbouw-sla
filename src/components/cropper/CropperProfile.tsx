@@ -7,7 +7,6 @@ import { getCroppedImg } from "../../utils";
 import { styles as classes } from "./CropperStyles";
 import { blob } from "stream/consumers";
 
-import "./CropperProfile.css";
 import { fileService } from "../../services/file";
 import { Button, Slider } from "@mui/material";
 

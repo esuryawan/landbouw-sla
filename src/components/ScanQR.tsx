@@ -7,13 +7,14 @@ import { authService } from "../services/auth";
 import { UserSLA } from "ababil-landbouw";
 import { Popup } from "./Popup";
 
-import "./ScanQR.css";
 import { ResponseCode } from "../constants";
 import { ResponseName } from "../utils";
 
-interface ScanQRProps extends ViewStatusProps {}
+import styles from "../styles/general.module.scss";
 
-interface ScanQRState extends ViewStatusState {}
+interface ScanQRProps extends ViewStatusProps { }
+
+interface ScanQRState extends ViewStatusState { }
 
 const qrcodeRegionId = "html5qr-code-full-region";
 
@@ -56,7 +57,8 @@ export default class ScanQR extends ViewStatus<ScanQRProps, ScanQRState> {
 		// TODO(mebjas): See if there is a better way to handle
 		//  promise in `componentWillUnmount`.
 		this.html5QrcodeScanner?.clear().catch((error) => {
-			this.onStatusError(error, Severity.Error);
+			// this.onStatusError(error, Severity.Error);
+			console.log("unmount", error);
 		});
 	}
 
@@ -89,7 +91,8 @@ export default class ScanQR extends ViewStatus<ScanQRProps, ScanQRState> {
 	}
 
 	onQrCodeError(errorMessage: string, error: Html5QrcodeError) {
-		this.onStatusError(errorMessage, Severity.Error);
+		console.log("onQrCodeError", error);
+		// this.onStatusError(errorMessage, Severity.Error);
 	}
 
 	onPopupClose(e: any) {
@@ -102,7 +105,7 @@ export default class ScanQR extends ViewStatus<ScanQRProps, ScanQRState> {
 		return (
 			<div>
 				<h2>Hasil Pindai</h2>
-				<div className="center">
+				<div className={styles.center}>
 					{this.Status === 0 ? (
 						<div>
 							<span>
@@ -122,7 +125,7 @@ export default class ScanQR extends ViewStatus<ScanQRProps, ScanQRState> {
 					)}
 				</div>
 
-				<button type="button" className="btn" onClick={this.onPopupClose.bind(this)}>
+				<button type="button" className={styles.btn} onClick={this.onPopupClose.bind(this)}>
 					Tutup
 				</button>
 			</div>
@@ -131,12 +134,12 @@ export default class ScanQR extends ViewStatus<ScanQRProps, ScanQRState> {
 
 	override render() {
 		return (
-			<div className="container">
+			<div className={styles.container}>
 				{this.doStatusRender()}
 				<div>
-					<h4 className="title">Absensi Scanner</h4>
+					<h4 className={styles.title}>Absensi Scanner</h4>
 					<div id={qrcodeRegionId} />
-					<button type="button" className="btn">
+					<button type="button" className={styles.btn}>
 						<Link to="/">Tutup</Link>
 					</button>
 				</div>

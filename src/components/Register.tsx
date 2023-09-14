@@ -4,16 +4,22 @@ import { authService, API_DOMAIN } from "../services/auth";
 import { Link } from "react-router-dom";
 import { grupIndex, UserSLA } from "ababil-landbouw";
 import { Severity, ViewStatus, ViewStatusProps, ViewStatusState } from "ababil-ui-views";
-import { Popup } from "./Popup";
 
-import "./Register.css";
 import { GrupNames } from "../constants";
 import { CredentialResponse, GoogleSignIn } from "ababil-auth";
 
-interface RegisterProps extends ViewStatusProps {}
+import styles from "./Register.module.scss";
+import classNames from "classnames";
+
+interface RegisterProps extends ViewStatusProps { }
 
 interface RegisterState extends ViewStatusState {
-	newRegister: boolean;
+	isPanitiaPindai: boolean;
+	isPanitiaAbsensi: boolean;
+	isSuperSuper: boolean;
+	isViewChart: boolean;
+	updateKehadiran: boolean;
+	showInfoSLA: boolean;
 }
 
 export default class Register extends ViewStatus<RegisterProps, RegisterState> {
@@ -30,21 +36,25 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 	userPicture: string = "";
 	timeout: any = null;
 
-	isPanitiaPindai: boolean | undefined;
-	isPanitiaAbsensi: boolean | undefined;
-	isSuperSuper: boolean | undefined;
-	isViewChart: boolean | undefined;
 
 	constructor(props: RegisterProps) {
 		super(props);
-		this.insertFieldAngkatan = this.insertFieldAngkatan.bind(this);
-		this.insertFieldNama = this.insertFieldNama.bind(this);
-		this.setUser = this.setUser.bind(this);
-		this.setUser(authService.getLogin());
-		this.state = {
+		this.setState({
 			...this.state,
-			newRegister: false,
-		};
+			isPanitiaPindai: false,
+			isPanitiaAbsensi: false,
+			isSuperSuper: false,
+			isViewChart: false,
+			updateKehadiran: false,
+			showInfoSLA: false,
+		});
+
+		this.getContent = this.getContent.bind(this);
+		this.doInsertFieldAngkatan = this.doInsertFieldAngkatan.bind(this);
+		this.doInsertFieldNama = this.doInsertFieldNama.bind(this);
+		this.doSetUser = this.doSetUser.bind(this);
+		this.doSetUser(authService.getLogin());
+
 		/* -----------------------------------------------  demo only -----------------------------------------------
 		this.user = { Id: 1, Name: "Erick Suryawan", Email: "erick.suryawan@gmail.com", Kind: 0, 
 			suggests: [ { Id: 1, Name: "Erick Suryawan", GraduationYear: 1993, }, ],
@@ -54,28 +64,157 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 		}; */
 	}
 
-	componentDidMount() {}
+	componentDidMount() {  }
 
-	doValidateForm() {
-		return this.angkatan !== "" && this.nama !== "";
+	render() {
+		return (
+			<div className={styles.container}>
+				{this.doStatusRender()}
+				{this.getContent()}
+			</div>
+		);
 	}
 
-	setUser(user: UserSLA | undefined) {
-		this.user = user;
-		if (this.user?.Picture) {
-			this.userPicture = API_DOMAIN + this.user.Picture;
+	getContent() {
+		let result = <></>;
+		if (!this.user) {
+			let gsiClientId: string = "1058359876929-6esuhjomsh3dlk2ncf6cjju004rs95fl.apps.googleusercontent.com";
+			const buttonConfig: GsiButtonConfiguration = {
+				type: "standard",
+				theme: "outline",
+				size: "large",
+				text: "signin_with",
+				shape: "circle",
+				logo_alignment: "left",
+				// width: "240px",
+				local: "id_ID",
+
+			};
+
+			result = (
+				<div className={styles.center}>
+					<div className={styles.avatar}>
+						<img className={styles.avatarImg} src="/iasma-logo.png" alt="profile" />
+					</div>
+					<div className={styles.welcomeText}>
+						<p>Assalamualaikum Warahmatullahi Wabarakatuh<br />Uda Uni Dunsanak Alumni</p>
+						<p className={styles.welcomeTextEm}>SMA 1 Landbouw Bukittinggi</p>
+						<p>Ini adalah aplikasi untuk registrasi data alumni dan sistem absensi acara Silaturahmi Lintas Angkatan di lokasi. Silakan masuk dengan menggunakan Akun Google Uda Uni Dunsanak dibawah ini:</p>
+					</div>
+					<br />
+					<div className={styles.signin}>
+						<GoogleSignIn buttonConfig={buttonConfig} callback={this.onSignIn.bind(this)} clientId={gsiClientId} />
+					</div>
+				</div>)
+
+		} else if (!this.user.Alumni) {
+			result = (
+				<>
+					<div className={styles.center}>
+						<h3 className={styles.title}>Registrasi Alumni</h3>
+						<h4>Silakan isi angkatan jo namo lengkap</h4>
+					</div>
+					<form>
+						<label htmlFor="inputAngkatan">
+							<b>Angkatan</b>
+						</label>
+						{this.doInsertFieldAngkatan("inputAngkatan", "Angkatan", "Pilih Angkatan")}
+
+						<label htmlFor="Nama">
+							<b>Nama</b>
+						</label>
+						{this.doInsertFieldNama("Nama", "Nama", "Pilih Nama")}
+
+						<div className={styles.btnContainer}>
+							<button type="button" className={styles.btn} onClick={this.onSignUp.bind(this)}>Registrasi</button>
+							<button type="button" className={styles.btn} onClick={this.onSignOut.bind(this)}><i className={classNames("fa", "fa-sign-out-alt")}></i> keluar</button>
+						</div>
+					</form>
+				</>)
+
+		} else if (this.state.showInfoSLA) {
+			result = (
+				<div>
+					<form>
+						<div className={styles.center}>
+							<span>
+								<p>
+									Assalamu’alaikum Wr. Wb.
+								</p>
+								<p>
+									Uda Uni Dunsanak kami ucapkan tarimo kasih alah mandaftar di portal registrasi IASMA 1 Bukittinggi.
+								</p>
+								<p>
+									Kaganti siriah nan sacabiak, pinang nan sagatok, Panitia SLA 2023 jo hati nan putiah, nan putiahnyo indak babacak, baringankan langkah Uda Uni Dunsanak untuak hadir pado alek SLA 2023 wak ko di wakatu jo tampek barikuik:
+								</p>
+								Hari/Tanggal: <br />
+								<b>Sabtu, 2 September 2023</b><br />
+								Waktu: <br />
+								<b>Jam 10:00 s/d salasai</b><br />
+								Tampek: <br />
+								<b>Balai Sarbini, Jakarta</b>
+
+								<p>
+									Salam hormat kami silang nan bapangka
+								</p>
+
+								<b>Panitia SLA 2023</b>
+							</span>
+							<hr></hr>
+							<h4>Konfirmasi Kehadiran</h4>
+							<div><label><input type="radio" value="0" checked={this.user.kehadiran === 0} onChange={this.onKehadiranChange.bind(this)} /> Belum Tahu</label></div>
+							<div><label><input type="radio" value="1" checked={this.user.kehadiran === 1} onChange={this.onKehadiranChange.bind(this)} /> InsyaAllah Hadir</label></div>
+							<div><label><input type="radio" value="2" checked={this.user.kehadiran === 2} onChange={this.onKehadiranChange.bind(this)} /> Tidak Hadir</label></div>
+							<div className={classNames(styles.btnContainer, "mt-3")}>
+								{this.state.updateKehadiran && (<button type="button" className={styles.btn} onClick={this.onSimpanKehadiran.bind(this)}>Simpan</button>)}
+								<button type="button" className={styles.btn} onClick={this.onKehadiranClose.bind(this)}>Tutup</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			)
+
+		} else if (this.user.Alumni.Id > 0) {
+			result = (
+				<div>
+					<div className={styles.center}>
+						<h4 className={styles.welcomeText}>selamat datang alumni</h4>
+						<h3 className={styles.welcomeTextEm}>SMA 1 Landbouw Bukittinggi</h3>
+						<div className={styles.avatar}>
+							<img className={styles.avatarImg} src={API_DOMAIN + "/res/SLA2023-logo.png"} alt="profile" />
+						</div>
+					</div>
+					<div className={styles.namaAngkatan}>
+						<span>
+							<b>{this.user.Alumni.Name}</b>
+						</span>
+						<span>
+							<b>{this.user.Alumni.GraduationYear}</b>
+						</span>
+					</div>
+					<div className={styles.btnContainer}>
+						<button type="button" className={styles.btn}><Link to="/sla2023">SLA 2023</Link></button>
+						<button type="button" className={styles.btn}><Link to="/showqr">Absensi</Link></button>
+						<button type="button" className={styles.btn}><Link to={"/alumni/" + this.user.Alumni?.Id}>Lengkapi Data</Link></button>
+						<button type="button" className={styles.btn} onClick={this.onSignOut.bind(this)}><i className={classNames("fa", "fa-sign-out-alt")}></i> keluar</button>
+					</div>
+					<div className={styles.btnContainerAdmin}>
+						{this.state.isPanitiaPindai && (<button type="button" className={styles.btnAdmin}><Link to="/scanqr">Pindai</Link></button>)}
+						{this.state.isPanitiaAbsensi && (<button type="button" className={styles.btnAdmin}><Link to="/absensi">Absensi Manual</Link></button>)}
+						{this.state.isSuperSuper && (<button type="button" className={styles.btnAdmin}><Link to="/roles">Roles</Link></button>)}
+						{/* {this.state.isViewChart && (<button type="button" className={styles.btnAdmin}><Link to="/chart/regs">Statistik</Link></button>)} */}
+						{/* {this.state.isViewChart && (<button type="button" className={styles.btnAdmin}><Link to="/chart/presents">Kehadiran</Link></button>)} */}
+					</div>
+				</div>)
 		}
-		this.isPanitiaAbsensi = this.user ? this.user?.Roles?.includes("panitia.absensi") : false;
-		this.isPanitiaPindai = this.user ? this.user?.Roles?.includes("panitia.pindai") : false;
-		this.isSuperSuper = this.user ? this.user?.Roles?.includes("super.super") : false;
-		this.isViewChart = this.user ? this.user?.Roles?.includes("view.chart") : false;
+		return result;
 	}
 
 	onSignIn(credential: CredentialResponse) {
 		authService.signin(credential).then(
 			(result) => {
-				this.setUser(result as UserSLA);
-				this.setState({});
+				this.doSetUser(result as UserSLA);
+				this.forceUpdate();
 			},
 			(error) => {
 				this.onStatusError(error, Severity.Error);
@@ -85,8 +224,8 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 
 	onSignOut(e: any) {
 		authService.logout();
-		this.setUser(undefined);
-		this.setState({});
+		this.doSetUser(undefined);
+		this.forceUpdate();
 	}
 
 	onSignUp(e: any) {
@@ -102,11 +241,11 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 			authService.registrasi(data).then(
 				(result) => {
 					// console.log(result);
-					// result user does not haave token yet
+					// result user does not have token yet
 					(result as UserSLA).AccessToken = this.user?.AccessToken as string;
-					this.setUser(result as UserSLA);
+					this.doSetUser(result as UserSLA);
 					authService.setLogin(result);
-					this.setState({ newRegister: true });
+					this.setState({ updateKehadiran: true });
 				},
 				(error) => {
 					this.onStatusError(error, Severity.Error);
@@ -115,10 +254,34 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 		}
 	}
 
-	insertFieldAngkatan(name: string, label: string, placeholder: string) {
+	doSetUser(user: UserSLA | undefined) {
+		// console.log("user", user);
+		this.user = user;
+		if (this.user) {
+			if (this.user.Picture) {
+				this.userPicture = API_DOMAIN + this.user.Picture;
+			}
+			let newState: RegisterState = this.state;
+			if (this.user.Roles) {
+				newState.isPanitiaAbsensi = this.user.Roles.includes("panitia.absensi");
+				newState.isPanitiaPindai = this.user.Roles.includes("panitia.pindai");
+				newState.isSuperSuper = this.user.Roles.includes("super.super");
+				newState.isViewChart = this.user.Roles.includes("view.chart");
+			}
+
+			newState.showInfoSLA = this.user.kehadiran === undefined;
+			this.setState(newState);
+		}
+	}
+
+	doValidateForm() {
+		return this.angkatan !== "" && this.nama !== "";
+	}
+
+	doInsertFieldAngkatan(name: string, label: string, placeholder: string) {
 		let list = [];
 		list.push(<option key={0} value={0}></option>);
-		for (var i = 1959; i < 2022; i++) {
+		for (var i = 1959; i < 2024; i++) {
 			let item = "" + i;
 			list.push(
 				<option key={item} value={item}>
@@ -143,9 +306,8 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 					<select value={this.angkatan} className="form-control input-lg form-group" id="inputAngkatan" onChange={this.onChangeAngkatan.bind(this)}>
 						{list}
 					</select>
-					{/* <i className="fa fa-chevron-down" /> */}
 				</div>
-				<p className="angkatan-info">{parse(this.angkatanInfo)}</p>
+				<p>{parse(this.angkatanInfo)}</p>
 			</div>
 		);
 	}
@@ -153,10 +315,10 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 	onChangeAngkatan(e: any) {
 		this.angkatan = e.target.value;
 		this.angkatanInfo = GrupNames[grupIndex(parseInt(this.angkatan))];
-		this.setState({});
+		this.forceUpdate();
 	}
 
-	insertFieldNama(name: string, label: string, placeholder: string) {
+	doInsertFieldNama(name: string, label: string, placeholder: string) {
 		let list = [];
 		this.namas?.forEach((item, key) => {
 			list.push(
@@ -171,7 +333,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 		if (this.namas && this.namas.length < this.namaCount) {
 			list.push(
 				<li value="x" key="x">
-					<span className="filter-info"> {this.namaCount - this.namas.length} nama lain tidak ditampilkan</span>
+					<span> {this.namaCount - this.namas.length} nama lain tidak ditampilkan</span>
 				</li>
 			);
 		}
@@ -192,18 +354,27 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 					<ul className="dropdown-menu" aria-labelledby="dropdownMenuButton2" id="myDropdown">
 						{list}
 					</ul>
-					{/* <i className="fa fa-chevron-down" /> */}
 				</div>
-				<p className="input-info">{parse(this.namaInfo)}</p>
+				<p>{parse(this.namaInfo)}</p>
 			</div>
 		);
+	}
+
+	onNamaClick(key: number) {
+		if (this.namas) {
+			var item = this.namas[key];
+			console.log(item);
+			this.nama = item.UserName.toLocaleUpperCase();
+			this.namaId = item.Id;
+			this.forceUpdate();
+		}
 	}
 
 	onNamaFilter(e: any) {
 		console.log("e", e);
 		this.nama = e.target.value.toUpperCase();
 		this.namaId = 0;
-		this.setState({});
+		this.forceUpdate();
 
 		clearTimeout(this.timeout);
 		this.timeout = setTimeout(() => {
@@ -215,171 +386,46 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 						const { count, rows } = response;
 						this.namaCount = count;
 						this.namas = rows;
-						this.setState({});
+						this.forceUpdate();
 					})
 					.catch((error) => {
 						this.onStatusError(error, Severity.Error);
 					});
 			} else {
-				this.setState({});
+				this.forceUpdate();
 			}
 		}, 500);
-		this.setState({});
+		this.forceUpdate();
 	}
 
-	onNamaClick(key: number) {
-		if (this.namas) {
-			var item = this.namas[key];
-			console.log(item);
-			this.nama = item.UserName.toLocaleUpperCase();
-			this.namaId = item.Id;
-			this.setState({});
+	onKehadiranChange(e: any) {
+		if (this.user) {
+			let value = Number(e.target.value);
+			if (this.user.kehadiran !== value) {
+				this.user.kehadiran = value;
+				this.setState({ updateKehadiran: true });
+			}
 		}
 	}
 
-	onPopupRegisterInfo(e: any) {
-		return (
-			<div>
-				<div className="center">
-					<span>
-						Selamat Uda/Uni/Adiak telah terdaftar. Registrasi ini akan digunakan untuk absensi di acara <b>SLA&nbsp;2022</b> pada tanggal <b>3&nbsp;sd&nbsp;5&nbsp;Juni&nbsp;2022</b> nanti. Sementara waktu, Uda/Uni/Adiak dapat
-						memperbaharui dan melengkapi data alumni.
-					</span>
-				</div>
-
-				<button type="button" className="btn" onClick={this.onPopupClose.bind(this)}>
-					Tutup
-				</button>
-			</div>
-		);
+	onSimpanKehadiran() {
+		if (this.user) {
+			authService.updateKehadiran({ kehadiran: this.user.kehadiran }).then(
+				(result) => {
+					// store update to localStorage
+					authService.setLogin(this.user as UserSLA);
+					this.setState({ showInfoSLA: false });
+				},
+				(error) => {
+					this.onStatusError(error, Severity.Error);
+				}
+			);
+		}
 	}
 
-	onPopupClose(e: any) {
+	onKehadiranClose(e: any) {
 		e.preventDefault();
-		this.setState({ newRegister: false });
+		this.setState({ showInfoSLA: false });
 	}
 
-	insertValidationMsg(valid: boolean, error: string) {
-		let classNm = "validation-msg text-sm-left";
-		if (valid) classNm = "validation-info text-sm-left ";
-		return error && <p className={classNm}>{parse(error)}</p>;
-	}
-
-	gsiClientId: string = "1058359876929-6esuhjomsh3dlk2ncf6cjju004rs95fl.apps.googleusercontent.com";
-
-	render() {
-		return (
-			<div className="container">
-				{this.doStatusRender()}
-				{!this.user && (
-					<div className="center">
-						<h3 className="title">SLA 2022</h3>
-						<div className="gsi-button center">
-							<GoogleSignIn callback={this.onSignIn.bind(this)} clientId={this.gsiClientId} />
-						</div>
-					</div>
-				)}
-				{this.user && !this.user.Alumni && (
-					<>
-						<h3 className="title">Registrasi SLA 2022</h3>
-						<form>
-							<div className="avatar">
-								<img src={this.userPicture} alt="profile" />
-							</div>
-
-							<label htmlFor="inputAngkatan">
-								<b>Angkatan</b>
-							</label>
-							{this.insertFieldAngkatan("inputAngkatan", "Angkatan", "Pilih Angkatan")}
-
-							<label htmlFor="Nama">
-								<b>Nama</b>
-							</label>
-							{this.insertFieldNama("Nama", "Nama", "Pilih Nama")}
-
-							<div className="div-btn">
-								<button type="button" className="btn" onClick={this.onSignUp.bind(this)}>
-									Registrasi
-								</button>
-								<button type="button" className="btn" onClick={this.onSignOut.bind(this)}>
-									<i className="fa fa-sign-out-alt"></i> keluar
-								</button>
-							</div>
-						</form>
-					</>
-				)}
-				{this.user && this.user.Alumni && this.user.Alumni?.Id > 0 && (
-					<div>
-						<div className="center">
-							<h4 className="title">selamat datang di</h4>
-							<h3 className="title">SLA 2022</h3>
-							<div className="avatar">
-								<img src={this.userPicture} alt="profile" />
-							</div>
-						</div>
-						<div className="center">
-							<span>
-								<b>{this.user.Alumni.Name}</b>
-							</span>
-							<span>
-								<b>{this.user.Alumni.GraduationYear}</b>
-							</span>
-						</div>
-						<div className="div-btn">
-							<button type="button" className="btn">
-								<Link to="/showqr">Absensi</Link>
-							</button>
-							<button type="button" className="btn">
-								<Link to={"/alumni/" + this.user.Alumni?.Id}>Lengkapi Data</Link>
-							</button>
-							{this.isPanitiaPindai && (
-								<button type="button" className="btn">
-									<Link to="/scanqr">Pindai</Link>
-								</button>
-							)}
-							{this.isPanitiaAbsensi && (
-								<button type="button" className="btn">
-									<Link to="/absensi">Absensi Manual</Link>
-								</button>
-							)}
-							{this.isSuperSuper && (
-								<button type="button" className="btn">
-									<Link to="/roles">Roles</Link>
-								</button>
-							)}
-							{this.isViewChart && (
-								<button type="button" className="btn">
-									<Link to="/chart/regs">Statistik</Link>
-								</button>
-							)}
-							{this.isViewChart && (
-								<button type="button" className="btn">
-									<Link to="/chart/presents">Kehadiran</Link>
-								</button>
-							)}
-							<button type="button" className="btn" onClick={this.onSignOut.bind(this)}>
-								<i className="fa fa-sign-out-alt"></i> keluar
-							</button>
-							{/* <i className="fa fa-user-circle fa-2">&nbsp;</i>
-							<i className="fa fa-users fa-2">&nbsp;</i>
-							<i className="fa fa-check-square fa-2">&nbsp;</i>
-							<i className="fa fa-cog fa-2">&nbsp;</i>
-							<i className="fa fa-cogs fa-2">&nbsp;</i>
-							<i className="fa fa-sign-in-alt fa-2">&nbsp;</i>
-							<i className="fa fa-sign-out-alt fa-2">&nbsp;</i>
-							<i className="fa fa-trash fa-2">&nbsp;</i>
-
-							<i className="fa fa-chart-area fa-2">&nbsp;</i>
-							<i className="fa fa-chart-bar fa-2">&nbsp;</i>
-							<i className="fa fa-chart-line fa-2">&nbsp;</i>
-							<i className="fa fa-bar-chart fa-2">&nbsp;</i>
-							<i className="fa fa-pie-chart fa-2">&nbsp;</i>
-							<i className="fa fa-picture fa-2">&nbsp;</i> */}
-						</div>
-					</div>
-				)}
-				<Popup onContent={this.onPopupRegisterInfo.bind(this)} show={this.state.newRegister}></Popup>
-			</div>
-		);
-	}
 }

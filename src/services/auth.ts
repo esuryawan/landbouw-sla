@@ -91,9 +91,40 @@ class AuthServiceSLA extends AuthService {
 		const response = await axios.get(API_URL + `chart/registration`);
 		return response.data;
 	}
+
 	async chartPresention() {
 		this.setAccessToken(axios);
 		const response = await axios.get(API_URL + `chart/presention`);
+		return response.data;
+	}
+
+	async updateKehadiran(data: any) {
+		this.setAccessToken(axios);
+		const response = await axios.post(API_URL + 'attendanceConfirm', data);
+		return response.data;
+	}
+
+	async queryConfirmationSummary() {
+		this.setAccessToken(axios);
+		const response = await axios.get(API_URL + `chart/confirmation`);
+		return response.data;
+	}
+
+	async queryConfirmationNames(year: any) {
+		this.setAccessToken(axios);
+		const response = await axios.get(API_URL + `chart/confirm/${year}`);
+		return response.data;
+	}
+
+	async queryPresentionSummary() {
+		this.setAccessToken(axios);
+		const response = await axios.get(API_URL + `chart/presention`);
+		return response.data;
+	}
+
+	async queryPresentionNames(year: any) {
+		this.setAccessToken(axios);
+		const response = await axios.get(API_URL + `chart/present/${year}`);
 		return response.data;
 	}
 

@@ -76,7 +76,9 @@ export const ColourCodes = [
 	"rgba(72,1,216,0.6)",	// 2020
 	"rgba(72,1,216,0.5)",	// 2021
 	"rgba(72,1,216,0.4)",	// 2022
+	"rgba(72,1,216,0.3)",	// 2023
 ];
+
 
 export const GrupColourCodes = [
 	"rgba(199, 11,128,1)",	// 1959

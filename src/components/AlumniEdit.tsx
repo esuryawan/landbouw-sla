@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { withRouter, WithRouterProps } from "ababil-router";
 import { UserSLA } from "ababil-landbouw";
 import { Severity, ViewStatus, ViewStatusProps, ViewStatusState } from "ababil-ui-views";
@@ -9,7 +9,8 @@ import { authService, API_DOMAIN } from "../services/auth";
 import { fileService } from "../services/file";
 import { readFile } from "../utils";
 
-import "./AlumniEdit.css";
+import styles from "./AlumniEdit.module.scss";
+import classNames from "classnames";
 
 interface AlumniEditParams extends ViewStatusProps {
 	id: string;
@@ -166,20 +167,17 @@ class AlumniEdit extends ViewStatus<WithRouterProps<AlumniEditParams>, AlumniEdi
 					{this.state.imageBlob ? (
 						<></>
 					) : (
-						<div className="container kartu">
+						<div className={styles.container}>
 							<div className="col-md-12">
-								<h3 className="title">Ubah Data Pribadi</h3>
-								<div className="centerProfile">
+								<h3 className={styles.title}>Ubah Data Pribadi</h3>
+								{/* <div className={styles.centerProfile}>
 									<label htmlFor="photo-upload" className="fas">
-										{/* <div className="img-wrap img-upload">
-											<img src={this.state.profileUrl} alt="profile" />
-										</div> */}
-										<div className="avatar">
-											<img className="upload" src={this.state.profileUrl} alt="profile" />
+										<div className={styles.avatar}>
+											<img className={styles.avatarUpload} src={this.state.profileUrl} alt="profile" />
 										</div>
 										<input id="photo-upload" type="file" onChange={this.onFileSelected.bind(this)} accept="image/*" />
 									</label>
-								</div>
+								</div> */}
 								<Box component="form" sx={{ "& > :not(style)": { m: 2, display: "grid" } }} noValidate autoComplete="off" onSubmit={this.onSubmit.bind(this)} textAlign="center">
 									<TextField id="Name" label="Nama Lahir" variant="outlined" defaultValue={this.state.alumni.Name} onChange={(e: any) => this.onChange(e)} />
 									<TextField id="Alias" label="Panggilan" variant="outlined" defaultValue={this.state.alumni.Alias} onChange={(e: any) => this.onChange(e)} />
@@ -192,14 +190,14 @@ class AlumniEdit extends ViewStatus<WithRouterProps<AlumniEditParams>, AlumniEdi
 									<TextField id="Business" label="Pekerjaan" variant="outlined" defaultValue={this.state.alumni.Business} onChange={(e: any) => this.onChange(e)} />
 									{/* <TextField id="NIS" label="NIS" variant="outlined" defaultValue={this.state.alumni.NIS} onChange={(e: any) => this.onChange(e)} /> */}
 									<div className="row">
-										<Button variant="contained" onClick={(e) => this.onClose(e)}>
-											Tutup
-										</Button>
 										{Object.keys(this.state.changes).length > 0 && (
-											<Button type="submit" variant="contained" className="mt-2">
+											<button  type="submit" className={styles.btn}>
 												Simpan
-											</Button>
+											</button>
 										)}
+										<button type="button" onClick={(e) => this.onClose(e)} className={classNames(styles.btn, "mt-2")}>
+											Tutup
+										</button>
 									</div>
 								</Box>
 

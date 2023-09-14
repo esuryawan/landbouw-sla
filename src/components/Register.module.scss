@@ -1,0 +1,50 @@
+@use "../styles/general";
+
+.btnContainer {
+	width: 50%;
+	margin: auto;
+}
+
+.namaAngkatan {
+	margin: 1em;
+	display: grid;
+	justify-content: center;
+	text-align: center;
+}
+
+.btnContainerAdmin {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 1em;
+	margin-bottom: 0em;
+}
+.btnAdmin {
+	@extend .btn;
+	width: calc(25% - 0.5em) ;
+	margin-left: 0.2em;
+	margin-right: 0.2em;
+	margin-bottom: 0%;
+	padding: 5px;
+
+	background-color: #d68c46;
+	// color: white;
+	// cursor: pointer;
+	// opacity: 0.8;
+	font-size: 0.8em;
+}
+
+.welcomeText {
+	font-size: 1em;
+	font-weight: 500;
+	text-align: center;
+}
+
+.welcomeTextEm{
+	font-size: 1.25em;
+	color: #4a55a2;
+}
+
+.signin {
+	display: inline-block;
+}
