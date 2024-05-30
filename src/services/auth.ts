@@ -3,7 +3,8 @@ import { AuthService, setAuthAPI_URL } from "ababil-auth";
 
 export const API_DOMAIN = process.env.NODE_ENV === 'production' ?
 	`https://${window.location.hostname}` :
-	'http://localhost:7000';
+	// 'http://localhost:7000';
+	`https://sla.iasma.id`
 
 const API_URL = API_DOMAIN + '/api/auth/';
 setAuthAPI_URL(API_URL);

@@ -55,7 +55,7 @@ class RolesAdd extends ViewStatus<WithRouterProps<RolesAddProps>, RolesAddState>
 			list.push(
 				<li value={item.Email} key={item.Id}>
 					<a href="#-" className="dropdown-item" onClick={this.onEmailClick.bind(this, key)}>
-						{item.UserName} ({item.Email})
+						{item.Name} ({item.Email})
 					</a>
 				</li>
 			);

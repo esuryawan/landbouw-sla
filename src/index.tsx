@@ -14,7 +14,7 @@ import RolesAdd from "./components/RolesAdd";
 import SLA2023 from "./components/SLA2023";
 import ChartConfirmNames from "./components/ChartConfirmNames";
 import ChartPresentNames from "./components/ChartPresentNames";
-import ChartPresentionLive from "./components/ChartPresentionLive";
+// import ChartPresentionLive from "./components/ChartPresentionLive";
 
 
 const container = document.getElementById("root");
@@ -34,7 +34,7 @@ root.render(
 			<Route path="/alumni/:id" element={<AlumniEdit />} />
 			<Route path="/chart/regs" element={<ChartRegistration />} />
 			<Route path="/chart/presents" element={<ChartPresention />} />
-			<Route path="/chart/presentLive" element={<ChartPresentionLive />} />
+			{/* <Route path="/chart/presentLive" element={<ChartPresentionLive />} /> */}
 			<Route path="/chart/present/:year" element={<ChartPresentNames />} />
 			<Route path="/chart/confirmation" element={<ChartConfirmation />} />
 			<Route path="/chart/confirm/:year" element={<ChartConfirmNames />} />

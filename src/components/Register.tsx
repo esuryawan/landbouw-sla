@@ -322,9 +322,9 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 		let list = [];
 		this.namas?.forEach((item, key) => {
 			list.push(
-				<li value={item.UserName} key={item.Id}>
+				<li value={item.Name} key={item.Id}>
 					<a href="#-" className="dropdown-item" onClick={this.onNamaClick.bind(this, key)}>
-						{item.UserName}
+						{item.Name}
 					</a>
 				</li>
 			);
@@ -364,7 +364,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 		if (this.namas) {
 			var item = this.namas[key];
 			console.log(item);
-			this.nama = item.UserName.toLocaleUpperCase();
+			this.nama = item.Name!.toLocaleUpperCase();
 			this.namaId = item.Id;
 			this.forceUpdate();
 		}

@@ -146,9 +146,9 @@ export default function ChartPresentionLive() {
             </Grid>
          </Grid>
          <Grid item xs={12}>
-            <ScrollText>
+            {/* <ScrollText>
                this'a a very long text...
-            </ScrollText>
+            </ScrollText> */}
          </Grid>
       </Grid>
    </Container>)
