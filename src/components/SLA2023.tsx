@@ -36,7 +36,7 @@ export default function SLA2023() {
     return <div className={styles.container}>
         <div className={styles.center}>
             <div className={styles.avatar}>
-                <img className={styles.avatarImg} src={API_DOMAIN + "/res/SLA2023-panitia.png"} alt="panitia" />
+                <img className={styles.avatarImg} src="/src/img/bg-2024-panitia.png" alt="panitia" />
             </div>
             <i className="fa fa-calendar-days"></i>&nbsp; Sabtu, 2 September 2023<br />
             <i className="fa fa-clock"></i>&nbsp; Jam 10:00 s/d salasai<br />

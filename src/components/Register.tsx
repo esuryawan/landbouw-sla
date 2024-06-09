@@ -178,7 +178,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 			result = (
 				<div>
 					<div className={styles.center}>
-						<h4 className={styles.welcomeText}>selamat datang alumni</h4>
+						<h4 className={styles.welcomeText}>SELAMAT DATANG ALUMNI</h4>
 						<h3 className={styles.welcomeTextEm}>SMA 1 Landbouw Bukittinggi</h3>
 						<div className={styles.avatar}>
 							<img className={styles.avatarImg} src={API_DOMAIN + "/res/SLA2023-logo.png"} alt="profile" />
