@@ -10,6 +10,7 @@ import { CredentialResponse, GoogleSignIn } from "ababil-auth";
 
 import styles from "./Register.module.scss";
 import classNames from "classnames";
+import logo from "../img/2024-logo.png";
 
 interface RegisterProps extends ViewStatusProps { }
 
@@ -100,7 +101,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 						<p>Assalamualaikum Warahmatullahi Wabarakatuh<br />Uda Uni Dunsanak Alumni</p>
 						<p className={styles.welcomeTextEm}>SMA 1 Landbouw Bukittinggi</p>
 						<p>Ini adalah aplikasi untuk registrasi data alumni dan sistem absensi saat acara Reuni Gadang 2024</p>
-						<p>Silahkan masuk dengan menggunakan akun Google Uni, Uda & Dunsanak  dengan mengklik link dibawah ini:</p>
+						<p>Silahkan Uni, Uda dan Dunsanak masuk dengan menggunakan akun Google  dengan mengklik link dibawah ini:</p>
 					</div>
 					<br />
 					<div className={styles.signin}>
@@ -182,7 +183,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 						<h4 className={styles.welcomeText}>SELAMAT DATANG ALUMNI</h4>
 						<h3 className={styles.welcomeTextEm}>SMA 1 Landbouw Bukittinggi</h3>
 						<div className={styles.avatar}>
-							<img className={styles.avatarImg} src={API_DOMAIN + "/res/SLA2023-logo.png"} alt="profile" />
+							<img className={styles.avatarImg} src={logo} alt="profile" />
 						</div>
 					</div>
 					<div className={styles.namaAngkatan}>
@@ -194,8 +195,8 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 						</span>
 					</div>
 					<div className={styles.btnContainer}>
-						<button type="button" className={styles.btn}><Link to="/sla2023">Acara Reuni Gadang 2024</Link></button>
-						<button type="button" className={styles.btn}><Link to="/showqr">Absensi</Link></button>
+						<button type="button" className={styles.btn}><Link to="/RG2024">Konfirmasi & Status Kehadiran</Link></button>
+						<button type="button" className={styles.btn}><Link to="/showqr">QR Code Absensi</Link></button>
 						<button type="button" className={styles.btn}><Link to={"/alumni/" + this.user.Alumni?.Id}>Lengkapi Data</Link></button>
 						<button type="button" className={styles.btn} onClick={this.onSignOut.bind(this)}><i className={classNames("fa", "fa-sign-out-alt")}></i> keluar</button>
 					</div>
@@ -282,7 +283,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 	doInsertFieldAngkatan(name: string, label: string, placeholder: string) {
 		let list = [];
 		list.push(<option key={0} value={0}></option>);
-		for (var i = 1959; i < 2024; i++) {
+		for (var i = 1959; i < 2025; i++) {
 			let item = "" + i;
 			list.push(
 				<option key={item} value={item}>
