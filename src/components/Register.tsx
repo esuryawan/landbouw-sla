@@ -99,7 +99,8 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 					<div className={styles.welcomeText}>
 						<p>Assalamualaikum Warahmatullahi Wabarakatuh<br />Uda Uni Dunsanak Alumni</p>
 						<p className={styles.welcomeTextEm}>SMA 1 Landbouw Bukittinggi</p>
-						<p>Ini adalah aplikasi untuk registrasi data alumni dan sistem absensi acara Silaturahmi Lintas Angkatan di lokasi. Silakan masuk dengan menggunakan Akun Google Uda Uni Dunsanak dibawah ini:</p>
+						<p>Ini adalah aplikasi untuk registrasi data alumni dan sistem absensi saat acara Reuni Gadang 2024</p>
+						<p>Silahkan masuk dengan menggunakan akun Google Uni, Uda & Dunsanak  dengan mengklik link dibawah ini:</p>
 					</div>
 					<br />
 					<div className={styles.signin}>
@@ -145,20 +146,20 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 									Uda Uni Dunsanak kami ucapkan tarimo kasih alah mandaftar di portal registrasi IASMA 1 Bukittinggi.
 								</p>
 								<p>
-									Kaganti siriah nan sacabiak, pinang nan sagatok, Panitia SLA 2023 jo hati nan putiah, nan putiahnyo indak babacak, baringankan langkah Uda Uni Dunsanak untuak hadir pado alek SLA 2023 wak ko di wakatu jo tampek barikuik:
+									Kaganti siriah nan sacabiak, pinang nan sagatok, Panitia Reuni Gadang 2024 jo hati nan putiah, nan putiahnyo indak babacak, baringankan langkah Uda Uni Dunsanak untuak hadir pado alek Reuni Gadang 2024 kito di wakatu jo tampek barikuik:
 								</p>
 								Hari/Tanggal: <br />
-								<b>Sabtu, 2 September 2023</b><br />
+								<b>13 - 15 September 2024 </b><br />
 								Waktu: <br />
 								<b>Jam 10:00 s/d salasai</b><br />
 								Tampek: <br />
-								<b>Balai Sarbini, Jakarta</b>
+								<b>SMA-1 Bukittingi</b>
 
 								<p>
 									Salam hormat kami silang nan bapangka
 								</p>
 
-								<b>Panitia SLA 2023</b>
+								<b>Panitia Reuni Gadang 2024</b>
 							</span>
 							<hr></hr>
 							<h4>Konfirmasi Kehadiran</h4>
@@ -193,7 +194,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 						</span>
 					</div>
 					<div className={styles.btnContainer}>
-						<button type="button" className={styles.btn}><Link to="/sla2023">SLA 2023</Link></button>
+						<button type="button" className={styles.btn}><Link to="/sla2023">Acara Reuni Gadang 2024</Link></button>
 						<button type="button" className={styles.btn}><Link to="/showqr">Absensi</Link></button>
 						<button type="button" className={styles.btn}><Link to={"/alumni/" + this.user.Alumni?.Id}>Lengkapi Data</Link></button>
 						<button type="button" className={styles.btn} onClick={this.onSignOut.bind(this)}><i className={classNames("fa", "fa-sign-out-alt")}></i> keluar</button>
