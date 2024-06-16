@@ -11,7 +11,7 @@ import ChartConfirmation from "./components/ChartConfirmation";
 import AlumniEdit from "./components/AlumniEdit";
 import Roles from "./components/Roles";
 import RolesAdd from "./components/RolesAdd";
-import SLA2023 from "./components/SLA2023";
+//import SLA2023 from "./components/SLA2023";
 import RG2024 from "./components/RG2024";
 import ChartConfirmNames from "./components/ChartConfirmNames";
 import ChartPresentNames from "./components/ChartPresentNames";
