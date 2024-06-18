@@ -11,7 +11,8 @@ import ChartConfirmation from "./components/ChartConfirmation";
 import AlumniEdit from "./components/AlumniEdit";
 import Roles from "./components/Roles";
 import RolesAdd from "./components/RolesAdd";
-import SLA2023 from "./components/SLA2023";
+//import SLA2023 from "./components/SLA2023";
+import RG2024 from "./components/RG2024";
 import ChartConfirmNames from "./components/ChartConfirmNames";
 import ChartPresentNames from "./components/ChartPresentNames";
 // import ChartPresentionLive from "./components/ChartPresentionLive";
@@ -24,7 +25,7 @@ root.render(
 	<BrowserRouter>
 		<Routes>
 			<Route path="/" element={<Register />} />
-			<Route path="/sla2023" element={<SLA2023 />} />
+			<Route path="/RG2024" element={<RG2024 />} />
 			<Route path="/showqr" element={<ShowQR />} />
 			<Route path="/scanqr" element={<ScanQR />} />
 			<Route path="/absensi" element={<Absensi />} />

@@ -30,6 +30,7 @@
 		"react-qr-code": "^2.0.11",
 		"react-router": "^6.15.0",
 		"react-router-dom": "^6.15.0",
+		"react-script": "^2.0.5",
 		"react-scripts": "5.0.1",
 		"sass": "^1.63.6",
 		"svgo": "^3.0.2",
@@ -43,7 +44,8 @@
 		"@types/react-easy-crop": "^2.0.0",
 		"@types/react-router": "^5.1.20",
 		"@types/react-router-dom": "^5.3.3",
-		"typescript": "^5.1.6"
+		"ajv": "^7.2.4",
+		"typescript": "^5.4.5"
 	},
 	"scripts": {
 		"build": "react-scripts build",
