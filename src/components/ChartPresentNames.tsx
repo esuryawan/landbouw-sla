@@ -1,6 +1,6 @@
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { authService } from "../services/auth";
 import classNames from "classnames";
 import styles from "../styles/general.module.scss";
