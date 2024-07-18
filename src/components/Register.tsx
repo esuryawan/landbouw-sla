@@ -100,8 +100,14 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 					<div className={styles.welcomeText}>
 						<p>Assalamualaikum Warahmatullahi Wabarakatuh<br />Uda Uni Dunsanak Alumni</p>
 						<p className={styles.welcomeTextEm}>SMA 1 Landbouw Bukittinggi</p>
-						<p>Ini adalah aplikasi untuk registrasi data alumni dan sistem absensi saat acara Reuni Gadang 2024</p>
-						<p>Silahkan Uni, Uda dan Dunsanak masuk dengan menggunakan akun Google  dengan mengklik link dibawah ini:</p>
+						<p>Silahkan Uni, Uda dan Dunsanak masuk untuk registrasi dan absensi saat acara Reuni Gadang 2024 dengan menggunakan akun Google dengan mengklik link di bawah ini:</p>
+					</div>
+					<div className={styles.welcomeTextLeft}>
+						<p><b>Jika menghadapi kesulitan, silahkan kontak panitia melalui pesan Whatsapp ke: </b> </p>
+						<ul>
+  							<li>081212479707</li>
+  							<li>085311467691</li>
+						</ul>  
 					</div>
 					<br />
 					<div className={styles.signin}>
