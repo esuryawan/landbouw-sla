@@ -40,7 +40,7 @@ export default function SLA2023() {
                 <img className={styles.avatarImg} src={logo} alt="panitia" />
             </div>
             <i className="fa fa-calendar-days"></i>&nbsp; Jumat, Sabtu & Minggu, 13-15 September 2024<br />
-            <i className="fa fa-clock"></i>&nbsp; Jam 10:00 s/d salasai<br />
+            <i className="fa fa-clock"></i>&nbsp; Jam 10:00 s/d selesai<br />
             <a target='_blank' rel='noopener noreferrer' href="https://maps.app.goo.gl/vYi5nyovL1Fio4M19" className={styles.link}><i className="fa fa-location-dot"></i>&nbsp; SMA-1 BUKITTINGGI</a>
             <hr />
             {user && user.Alumni ? (
