@@ -1,6 +1,6 @@
 {
 	"name": "landbouw-sla",
-	"version": "0.1.20230624",
+	"version": "0.1.20240718",
 	"private": true,
 	"dependencies": {
 		"@babel/core": "^7.22.9",

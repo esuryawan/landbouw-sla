@@ -81,7 +81,7 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 	insertFieldAngkatan(name: string, label: string, placeholder: string) {
 		let list = [];
 		list.push(<option key={0} value={0}></option>);
-		for (var i = 1959; i < 2024; i++) {
+		for (var i = 1959; i < 2025; i++) {
 			let item = "" + i;
 			list.push(
 				<option key={item} value={item}>
@@ -234,7 +234,7 @@ export default class Absensi extends ViewStatus<AbsensiProps, AbsensiState> {
 					</>
 				) : (
 					<>
-						<h3 className={styles.title}>Absensi SLA 2023</h3>
+						<h3 className={styles.title}>Absensi Reuni Gadang 2024</h3>
 						<form>
 							<label htmlFor="inputAngkatan">Angkatan</label>
 							{this.insertFieldAngkatan("inputAngkatan", "Angkatan", "Pilih Angkatan")}
