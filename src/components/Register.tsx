@@ -105,8 +105,8 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 					<div className={styles.welcomeTextLeft}>
 						<p><b>Jika menghadapi kesulitan, silahkan kontak panitia melalui pesan Whatsapp ke: </b> </p>
 						<ul>
-  							<li>081212479707</li>
-  							<li>085311467691</li>
+  							<li>0812-1247-9707</li>
+  							<li>0853-1146-7691</li>
 						</ul>  
 					</div>
 					<br />
