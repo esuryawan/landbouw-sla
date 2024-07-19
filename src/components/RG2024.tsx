@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { API_DOMAIN, authService } from "../services/auth";
+import { authService } from "../services/auth";
 import classNames from "classnames";
 import { UserSLA } from "ababil-landbouw";
 import { useState } from "react";

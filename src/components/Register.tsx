@@ -40,7 +40,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 
 	constructor(props: RegisterProps) {
 		super(props);
-		this.setState({
+		this.state = {
 			...this.state,
 			isPanitiaPindai: false,
 			isPanitiaAbsensi: false,
@@ -48,13 +48,13 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 			isViewChart: false,
 			updateKehadiran: false,
 			showInfoSLA: false,
-		});
+		};
 
 		this.getContent = this.getContent.bind(this);
 		this.doInsertFieldAngkatan = this.doInsertFieldAngkatan.bind(this);
 		this.doInsertFieldNama = this.doInsertFieldNama.bind(this);
 		this.doSetUser = this.doSetUser.bind(this);
-		this.doSetUser(authService.getLogin());
+		this.doSetUser(authService.getLogin(), false);
 
 		/* -----------------------------------------------  demo only -----------------------------------------------
 		this.user = { Id: 1, Name: "Erick Suryawan", Email: "erick.suryawan@gmail.com", Kind: 0, 
@@ -221,7 +221,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 	onSignIn(credential: CredentialResponse) {
 		authService.signin(credential).then(
 			(result) => {
-				this.doSetUser(result as UserSLA);
+				this.doSetUser(result as UserSLA, true);
 				this.forceUpdate();
 			},
 			(error) => {
@@ -232,7 +232,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 
 	onSignOut(e: any) {
 		authService.logout();
-		this.doSetUser(undefined);
+		this.doSetUser(undefined, true);
 		this.forceUpdate();
 	}
 
@@ -251,7 +251,7 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 					// console.log(result);
 					// result user does not have token yet
 					(result as UserSLA).AccessToken = this.user?.AccessToken as string;
-					this.doSetUser(result as UserSLA);
+					this.doSetUser(result as UserSLA, true);
 					authService.setLogin(result);
 					this.setState({ updateKehadiran: true });
 				},
@@ -262,23 +262,40 @@ export default class Register extends ViewStatus<RegisterProps, RegisterState> {
 		}
 	}
 
-	doSetUser(user: UserSLA | undefined) {
+	doSetUser(user: UserSLA | undefined, ismounted: boolean) {
 		// console.log("user", user);
 		this.user = user;
 		if (this.user) {
 			if (this.user.Picture) {
 				this.userPicture = API_DOMAIN + this.user.Picture;
 			}
-			let newState: RegisterState = this.state;
-			if (this.user.Roles) {
-				newState.isPanitiaAbsensi = this.user.Roles.includes("panitia.absensi");
-				newState.isPanitiaPindai = this.user.Roles.includes("panitia.pindai");
-				newState.isSuperSuper = this.user.Roles.includes("super.super");
-				newState.isViewChart = this.user.Roles.includes("view.chart");
-			}
+			if (ismounted) {
+				let newState: RegisterState = this.state;
+				if (this.user.Roles) {
+					newState.isPanitiaAbsensi = this.user.Roles.includes("panitia.absensi");
+					newState.isPanitiaPindai = this.user.Roles.includes("panitia.pindai");
+					newState.isSuperSuper = this.user.Roles.includes("super.super");
+					newState.isViewChart = this.user.Roles.includes("view.chart");
+				}
 
-			newState.showInfoSLA = this.user.kehadiran === undefined;
-			this.setState(newState);
+				newState.showInfoSLA = this.user.kehadiran === undefined;
+				this.setState(newState);
+			} else {
+				if (this.user.Roles) {
+					this.state = {
+						...this.state,
+						isPanitiaAbsensi: this.user.Roles.includes("panitia.absensi"),
+						isPanitiaPindai: this.user.Roles.includes("panitia.pindai"),
+						isSuperSuper: this.user.Roles.includes("super.super"),
+						isViewChart: this.user.Roles.includes("view.chart")
+					}
+				}
+
+				this.state = {
+					...this.state,
+					showInfoSLA: this.user.kehadiran === undefined
+				}
+			}
 		}
 	}
 
